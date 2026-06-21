@@ -37,7 +37,7 @@
           value: "{{item.instances[0].private_ip_address}}"
           overwrite: true
       loop: "{{ ec2_output.results }}"
-
+      when: action == "create"
     - name: Creating route 53 records for frontend
       amazon.aws.route53:
           state: present
@@ -63,7 +63,7 @@
       loop: "{{ instances }}"
       when: 
         - action == "delete"
-        - item   == "frontend"
+        # - item   == "frontend"
 
 
     - name: Delete the instances record
