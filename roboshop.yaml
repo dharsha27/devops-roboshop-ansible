@@ -16,6 +16,8 @@
           - "roboshop-common"
       loop: "{{ instances }}"
       register: ec2_output
+      when:
+        - action == "create
     # - name: print output
     #   debug:
     #      msg: "{{ ec2_output }}"
@@ -63,4 +65,13 @@
       when: 
         - action == "delete"
         - item   == "frontend"
+
+
+    - name: Delete the instances record
+      amazon.aws.ec2_instance:
+        state : absent
+        name: "roboshop-{{ item }}"
+      loop: "{{ instances }}"
+      when: action == "delete"
+       
       
