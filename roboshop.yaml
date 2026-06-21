@@ -1,5 +1,5 @@
 - name: roboshop instance management
-  hsots: local
+  hosts: local
   connection: local
   vars:
     instances: ["mysql", "rabbitmq", "redis", "mongodb"]
