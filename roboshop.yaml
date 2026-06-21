@@ -4,8 +4,7 @@
   vars:
     instances: ["mysql", "rabbitmq", "redis", "mongodb"]
     image_id: ami-0220d79f3f480ecf5
-    tasks:
-
+  tasks:
      - name: create an AWS instances
        amazom.aws.ec2_instance:
           instance_type: t3.micro
