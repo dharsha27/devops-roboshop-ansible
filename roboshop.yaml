@@ -2,7 +2,7 @@
   hosts: localhost
   connection: local
   vars:
-    instances: ["mysql", "rabbitmq", "redis", "mongodb"]
+    instances: ["mysql", "rabbitmq", "redis", "mongodb","frontend"]
     image_id: ami-0220d79f3f480ecf5
     domain_name: devopspractice.online
   tasks:
@@ -59,6 +59,6 @@
         ttl: 1
       loop: "{{ instances }}"
       when: 
-        action == "delete"
-        item == "frontend"
+        - action == "delete"
+        - item   == "frontend"
       
