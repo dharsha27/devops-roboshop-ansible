@@ -66,3 +66,26 @@
         dest: /app
         remote_src: yes
 
+    - name: install dependencies
+      community.general.npm:
+        path: /app
+
+    - name: copy catalogue services
+      template:
+        src: catalogue.service.je
+        dest: /etc/systemd/system/catalogue.service
+    - name: copying the mongo
+      copy:    
+        src: mongo.repo
+        dest: /etc/yum.repos.d/mongo.repo
+
+    - name: install mongodb-mongosh 
+      ansible.builtin.package:
+        name: mongodb-mongosh
+        state: present
+
+    - name: Load products
+      community.mongodb.mongodb.shell:
+        login_host: "{{ MONGODB_HOST }}"
+        file: "/app/db/master-data.js"
+        idempotent: yes
