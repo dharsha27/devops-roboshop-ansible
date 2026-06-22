@@ -2,11 +2,19 @@
   hosts: mongodb
   become: yes
   tasks:
-    - name: copying the mongo
-      copy:    
-        src: mongo.repo
-        dest: /etc/yum.repos.d/mongo.repo
+    # - name: copying the mongo
+    #   copy:    
+    #     src: mongo.repo
+    #     dest: /etc/yum.repos.d/mongo.repo
     - name: Install mongod server
       package:
          name: mongodb-org
          state: present
+         dnf: yes
+
+    # - name: replace the text in the repo file
+    #   replace:
+    #      regexp: '127.0.0.1'
+    #      replace: '0.0.0.0'
+
+      
