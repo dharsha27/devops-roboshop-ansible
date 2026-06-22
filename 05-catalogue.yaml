@@ -87,7 +87,9 @@
     - name: Load products
       shell: mongosh --host "{{ MONGODB_HOST  }}"  --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
       register: catalogue_output
-  
+      tags:
+        - mongodb
     - name: print out put
       debug: "{{ catalogeu_output}}"
-        # msg: 
+      tags:
+        - mongodb
