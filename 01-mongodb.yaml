@@ -2,10 +2,10 @@
   hosts: mongodb
   become: yes
   tasks:
-    # - name: copying the mongo
-    #   copy:    
-    #     src: mongo.repo
-    #     dest: /etc/yum.repos.d/mongo.repo
+    - name: copying the mongo
+      copy:    
+        src: mongo.repo
+        dest: /etc/yum.repos.d/mongo.repo
     - name: Install mongod server
       ansible.builtin.package:
         name: mongodb-org
