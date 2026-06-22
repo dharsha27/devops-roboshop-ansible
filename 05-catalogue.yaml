@@ -39,3 +39,30 @@
         home: /app
         shell: /sbin/nologin
         comment: "roboshop system user"
+
+    - name: remvoe the /app
+      ansible.builtin.file:
+         path: /app
+         state: absent
+  
+    - name: remvoe the catalogue zip file
+      ansible.builtin.file:
+         path: /tmp/catalogue.zip
+         state: absent
+
+# creating a /app directory
+    - name: create the /app
+      ansible.builtin.file:
+         path: /app
+         state: directory
+  
+    - name: download the catalogue
+      ansible.builtin.get_url:
+         url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+         dest: /tmp/catalogue.zip
+    - name: unzip unarchive
+      ansible.builtin.unarchive:
+        src: /tmp/catalogue.zip
+        dest: /app
+        
+
