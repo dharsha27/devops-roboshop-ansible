@@ -7,10 +7,10 @@
     #     src: mongo.repo
     #     dest: /etc/yum.repos.d/mongo.repo
     - name: Install mongod server
-      package:
-         name: mongodb-org
-         state: present
-         dnf: yes
+      ansible.builtin.package:
+        name: mongodb-org
+        state: present
+         
 
     # - name: replace the text in the repo file
     #   replace:
