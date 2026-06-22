@@ -85,7 +85,9 @@
         state: present
 
     - name: Load products
-      community.mongodb.mongodb.shell:
-        login_host: "{{ MONGODB_HOST }}"
-        file: "/app/db/master-data.js"
-        idempotent: yes
+      shell: mongosh --host "{{ MONGODB_HOST  }}"  --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+      register: catalogue_output
+  
+    - name: print out put
+      debug: "{{ catalogeu_output}}"
+        # msg: 
