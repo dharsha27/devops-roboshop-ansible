@@ -2,7 +2,7 @@
   hosts: localhost
   connection: local
   vars:
-    instances: ["mysql","rabbitmq","redis","mongodb","frontend","user","cart","payment","shipping","dispatch"]
+    instances: ["mysql","rabbitmq","redis","catalogue","mongodb","frontend","user","cart","payment","shipping","dispatch"]
     image_id: ami-0220d79f3f480ecf5
     domain_name: devopspractice.online
   tasks:
