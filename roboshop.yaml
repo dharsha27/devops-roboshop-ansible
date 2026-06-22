@@ -2,7 +2,7 @@
   hosts: localhost
   connection: local
   vars:
-    instances: ["mysql", "rabbitmq", "redis", "mongodb","frontend"]
+    instances: ["mysql","rabbitmq","redis","mongodb","frontend","user","cart","payment","shipping","dispatch"]
     image_id: ami-0220d79f3f480ecf5
     domain_name: devopspractice.online
   tasks:
@@ -38,6 +38,7 @@
           overwrite: true
       loop: "{{ ec2_output.results }}"
       when: action == "create"
+   
     - name: Creating route 53 records for frontend
       amazon.aws.route53:
           state: present
