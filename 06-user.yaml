@@ -57,7 +57,7 @@
       systemd_service:
         name: user
         daemon_reload: true
-      when: unit_file.change
+      # when: unit_file.change
 
     - name: start and enable the catalogue
       service:
