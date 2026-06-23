@@ -70,7 +70,8 @@
       tags:
         - mongodb
     - name: print out put
-      debug: "{{ catalogeu_output}}"
+      debug: 
+        msg: "{{ catalogue_output}}"
       tags:
         - mongodb
 
