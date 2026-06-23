@@ -14,6 +14,7 @@
     
     - name: replace the text in the repo file
       replace:
+         path: /etc/mongod.conf
          regexp: '127.0.0.1'
          replace: '0.0.0.0'
 
