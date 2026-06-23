@@ -1,5 +1,6 @@
 - name: Configure the Frontend services
   hosts: frontend
+  become: yes
   tasks:
    - name: enable nodejs 20
      ansible.builtin.command: dnf module enable nginx:1.24 -y
