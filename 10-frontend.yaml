@@ -9,6 +9,7 @@
      ansible.builtin.package:
         name: nginx 
         state: present
+   
    - name: start and enable the cart
      ansible.builtin.service:
         name: nginx
@@ -16,17 +17,17 @@
         enabled: yes
     
    - name: Remove the html directory
-     file:
+     ansible.builtin.file:
         path: /usr/share/nginx/html/
         state: absent
 
    - name: Remove the frontend directory
-     file:
+     ansible.builtin.file:
         path: /tmp/frontend.zip
         state: absent
 
    - name: create the html directory
-     file:
+     ansible.builtin.file:
         path: /usr/share/nginx/html/
         state: directory       
 
@@ -43,12 +44,13 @@
 
    - name: Remove the default nginx configuration 
      file:
-        path: /usr/share/nginx/html/
+        path: /etc/nginx/nginx.conf
         state: absent
+   
    - name: copy the nginx.conf
      ansible.builtin.copy:
         src: nginx.conf.j2
-        dest: /usr/share/nginx/html/
+        dest: /etc/nginx/nginx.conf
 
    - name: restart the nginx services
      ansible.builtin.service:
