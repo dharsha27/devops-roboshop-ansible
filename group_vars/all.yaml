@@ -9,3 +9,6 @@ USER_HOST: user.devopspractice.online
 RABBITMQ_HOST: rabbitmq.devopspractice.online
 SHIPPING_HOST: shipping.devopspractice.online
 PAYMENT_HOST: payment.devopspractice.online
+
+
+
