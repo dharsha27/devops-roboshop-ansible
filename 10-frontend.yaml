@@ -1,0 +1,55 @@
+- name: Configure the Frontend services
+  hosts: frontend
+  tasks:
+   - name: enable nodejs 20
+     ansible.builtin.command: dnf module enable nginx:1.24 -y
+   
+   - name: install nginx  20
+     ansible.builtin.package:
+        name: nginx 
+        state: present
+   - name: start and enable the cart
+     ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
+    
+   - name: Remove the html directory
+     file:
+        path: /usr/share/nginx/html/
+        state: absent
+
+   - name: Remove the frontend directory
+     file:
+        path: /tmp/frontend.zip
+        state: absent
+
+   - name: create the html directory
+     file:
+        path: /usr/share/nginx/html/
+        state: present
+   - name: download the frontend
+     ansible.builtin.get_url:
+         url: https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+         dest: /tmp/frontend.zip
+
+   - name: unzip unarchive
+     ansible.builtin.unarchive:
+        src: /tmp/frontend.zip
+        dest: /usr/share/nginx/html/
+        remote_src: yes
+
+   - name: Remove the default nginx configuration 
+     file:
+        path: /usr/share/nginx/html/
+        state: absent
+   - name: copy the nginx.conf
+     ansible.builtin.copy:
+        src: nginx.conf.j2
+        dest: /usr/share/nginx/html/
+
+   - name: restart the nginx services
+     ansible.builtin.service:
+       name: nginx
+       state: restarted
+       enables: yes
