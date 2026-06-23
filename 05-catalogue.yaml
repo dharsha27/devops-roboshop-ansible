@@ -84,10 +84,14 @@
       systemd_service:
         name: catalogue
         daemon_reload: true
-      when: unit_file.changed
+      # when: unit_file.changed
+      tags:
+        - mongodb
     - name: start and enable the catalogue
       service:
         name: catalogue
         state: started
         enabled: yes
+      tags:
+        - mongodb
 
