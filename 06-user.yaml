@@ -1,5 +1,5 @@
-- name: configure the catalogue server
-  hosts: catalogue
+- name: configure the user
+  hosts: user
   become: yes
   tasks:
     - name: enable nodejs 20
@@ -17,3 +17,51 @@
         home: /app
         shell: /sbin/nologin
         comment: "roboshop system user"
+    
+    - name: remvoe the /app
+      ansible.builtin.file:
+         path: /app
+         state: absent
+  
+    - name: remvoe the user zip file
+      ansible.builtin.file:
+         path: /tmp/user.zip
+         state: absent
+
+    - name: create app directory
+      ansible.builtin.file:
+        path: /app
+        state: directory
+
+    - name: download the catalogue
+      ansible.builtin.get_url:
+         url: https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip
+         dest: /tmp/user.zip
+
+    - name: unzip unarchive
+      ansible.builtin.unarchive:
+        src: /tmp/user.zip
+        dest: /app
+        remote_src: yes
+      
+    - name: install dependencies
+      community.general.npm:
+        path: /app
+
+    - name: copy the user service
+      tamplate:
+        src: user.service.j2
+        dest: /etc/systemd/system/catalogue.service
+
+    - name: deamon reload
+      systemd_service:
+        name: user
+        daemon_reload: true
+      when: unit_file.change
+
+    - name: start and enable the catalogue
+      service:
+        name: user
+        state: started
+        enabled: yes
+        
