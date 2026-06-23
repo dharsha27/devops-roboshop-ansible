@@ -41,6 +41,8 @@
         src: /tmp/frontend.zip
         dest: /usr/share/nginx/html/
         remote_src: yes
+     args:
+       chdir: /usr/share/nginx/html/   
 
    - name: Remove the default nginx configuration 
      file:
