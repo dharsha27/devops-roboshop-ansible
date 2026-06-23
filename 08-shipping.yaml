@@ -72,15 +72,15 @@
        - /app/db/master-data.sql
 
 
-    - name: deamon reload
-      systemd_service:
-        name: shipping
-        daemon_reload: true
-      # when: unit_file.change
+    # - name: deamon reload
+    #   systemd_service:
+    #     name: shipping
+    #     daemon_reload: true
+    #   # when: unit_file.change
 
-    - name: start and enable the shipping
-      service:
-        name: shipping
-        state: started
-        enabled: yes
+    # - name: start and enable the shipping
+    #   service:
+    #     name: shipping
+    #     state: started
+    #     enabled: yes
         
