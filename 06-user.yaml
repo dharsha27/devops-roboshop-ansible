@@ -49,7 +49,7 @@
         path: /app
 
     - name: copy the user service
-      tamplate:
+      template:
         src: user.service.j2
         dest: /etc/systemd/system/catalogue.service
 
