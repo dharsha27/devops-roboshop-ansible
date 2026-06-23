@@ -1,0 +1,69 @@
+- name: configure the shipping
+  hosts: shipping 
+  become: yes
+  tasks:
+    - name: Install maven
+      ansible.builtin.package: 
+          name: maven
+          state: present
+
+    - name: create a system user
+      ansible.builtin.user:
+        name: roboshop
+        system: true
+        home: /app
+        shell: /sbin/nologin
+        comment: "roboshop system user"
+    
+    - name: remvoe the /app
+      ansible.builtin.file:
+         path: /app
+         state: absent
+  
+    - name: remvoe the shipping zip file
+      ansible.builtin.file:
+         path: /tmp/shipping.zip
+         state: absent
+
+    - name: create app directory
+      ansible.builtin.file:
+        path: /app
+        state: directory
+
+    - name: download the shipping
+      ansible.builtin.get_url:
+         url: https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip
+         dest: /tmp/shipping.zip
+
+    - name: unzip unarchive
+      ansible.builtin.unarchive:
+        src: /tmp/shipping.zip
+        dest: /app
+        remote_src: yes
+      
+    - name: install dependencies
+      command: mvn clean package
+      args:
+        chdir: /app
+        
+    - name: move the shipping jar file
+      command: mv target/shipping-1.0.jar shipping.jar 
+      args:
+        chdir: /app
+    - name: copy the user service
+      template:
+        src: shipping.service.j2
+        dest: /etc/systemd/system/shipping.service
+
+    - name: deamon reload
+      systemd_service:
+        name: shipping
+        daemon_reload: true
+      # when: unit_file.change
+
+    - name: start and enable the shipping
+      service:
+        name: shipping
+        state: started
+        enabled: yes
+        
